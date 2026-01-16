@@ -274,7 +274,11 @@ launch_app(
 **Outputs:** The app returns an annotated image plus a JSON summary (fused counts + detection polygons).
 
 ## Model weights
-The published model weights are **AGPL-3.0 only** and can be obtained from Zenodo: **doi: 10.5281/zenodo.17987887**.
+The published model weights are **AGPL-3.0 only** and can be obtained from Zenodo:
+https://doi.org/10.5281/zenodo.17987886
+
+Direct Link to the weights file:
+https://zenodo.org/records/17987887/files/collembot_yolo11xseg_v_0_1_0.pt?download=1
 
 ## Dependencies
 This project depends on **YOLOv11 by Ultralytics**, which is licensed under **AGPL-3.0**. The dependency is not bundled with this repository.
