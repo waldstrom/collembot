@@ -42,132 +42,6 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import r2_score
 import cv2
 
-def find_main_circle(img_path):
-    """
-    Detect the main dish/glass circle.
-
-    Strategy:
-    1) Segment the muddy liquid region in HSV space (S high, V medium).
-    2) Morphologically clean the mask.
-    3) Compute the mask's center of mass.
-    4) Run HoughCircles on the grayscale image masked by this region.
-    5) From all Hough circles, keep only those
-       - with radius in a plausible range, and
-       - whose center is close to the mask center.
-    6) Choose the candidate closest to the mask center, enlarge radius slightly.
-    """
-    if img_path is None:
-        return None
-
-    img = cv2.imread(str(img_path))
-    if img is None:
-        return None
-
-    h, w = img.shape[:2]
-    if h == 0 or w == 0:
-        return None
-
-    mindim = min(h, w)
-
-    # --- 1) Color-based segmentation of the muddy liquid ----------------------
-    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    h_ch, s_ch, v_ch = cv2.split(hsv)
-
-    # mask: reasonably saturated and not too bright or too dark
-    mask = (s_ch > ROI_S_MIN) & (v_ch > ROI_V_MIN) & (v_ch < ROI_V_MAX)
-    mask_u8 = mask.astype("uint8") * 255
-
-    # morphological closing/opening to fill small gaps and remove noise
-    kernel = cv2.getStructuringElement(
-        cv2.MORPH_ELLIPSE, (ROI_KERNEL_SIZE, ROI_KERNEL_SIZE)
-    )
-    mask_u8 = cv2.morphologyEx(mask_u8, cv2.MORPH_CLOSE, kernel, iterations=2)
-    mask_u8 = cv2.morphologyEx(mask_u8, cv2.MORPH_OPEN, kernel, iterations=1)
-
-    ys, xs = np.nonzero(mask_u8)
-    if xs.size == 0:
-        # segmentation failed => no ROI for this slide
-        return None
-
-    cx_mask = float(xs.mean())
-    cy_mask = float(ys.mean())
-
-    # --- 2) Hough on masked edges --------------------------------------------
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    gray_blur = cv2.GaussianBlur(gray, (9, 9), 2)
-    gray_masked = cv2.bitwise_and(gray_blur, gray_blur, mask=mask_u8)
-
-    min_radius = int(mindim * 0.30)
-    max_radius = int(mindim * 0.60)
-
-    circles = cv2.HoughCircles(
-        gray_masked,
-        cv2.HOUGH_GRADIENT,
-        dp=1.2,
-        minDist=h / 2,
-        param1=120,
-        param2=20,
-        minRadius=min_radius,
-        maxRadius=max_radius,
-    )
-
-    if circles is None:
-        return None
-
-    candidates = []
-    for x_f, y_f, r_f in circles[0]:
-        x = int(round(x_f))
-        y = int(round(y_f))
-        r = int(round(r_f))
-
-        # keep only reasonably central centers
-        if not (w * CIRCLE_CENTER_MARGIN <= x <= w * (1.0 - CIRCLE_CENTER_MARGIN)):
-            continue
-        if not (h * CIRCLE_CENTER_MARGIN <= y <= h * (1.0 - CIRCLE_CENTER_MARGIN)):
-            continue
-
-        rel_r = r / float(mindim)
-        if not (CIRCLE_RADIUS_MIN_REL <= rel_r <= CIRCLE_RADIUS_MAX_REL):
-            continue
-
-        # distance of this center to the mask center (normalized by image size)
-        dist_norm = math.hypot(x - cx_mask, y - cy_mask) / float(mindim)
-        if dist_norm > 0.25:
-            # too far away from mask center => likely spurious arc
-            continue
-
-        candidates.append((x, y, r, dist_norm))
-
-    if not candidates:
-        # nothing reliable => no ROI masking
-        return None
-
-    # choose the candidate closest to the mask center, prefer larger radius if tie
-    x, y, r, _ = min(candidates, key=lambda c: (c[3], -c[2]))
-
-    r = int(r * CIRCLE_RADIUS_SCALE)
-    return int(x), int(y), int(r)
-
-
-def point_inside_circle(px, py, circle):
-    if circle is None:
-        return True
-    cx, cy, r = circle
-    return (px - cx)**2 + (py - cy)**2 <= r*r
-
-
-def filter_polygons_by_circle(polys, circle):
-    if circle is None:
-        return polys
-    filtered = []
-    for p in polys:
-        geom = p.get("polygon")
-        if geom is None or geom.is_empty:
-            continue
-        c = geom.centroid
-        if point_inside_circle(c.x, c.y, circle):
-            filtered.append(p)
-    return filtered
 
 # ------------------------------------------------------------------------------
 #                         CONFIGURATION & PATH SETUP
@@ -1412,6 +1286,139 @@ def process_slide(sid, allpols):
         "recall": match_info["recall"],
         "f1": match_info["f1"],
     }
+
+################################################################################
+#                     CIRCULAR DISH EXTRACTION
+################################################################################
+
+def find_main_circle(img_path):
+    """
+    Detect the main dish/glass circle.
+
+    Strategy:
+    1) Segment the muddy liquid region in HSV space (S high, V medium).
+    2) Morphologically clean the mask.
+    3) Compute the mask's center of mass.
+    4) Run HoughCircles on the grayscale image masked by this region.
+    5) From all Hough circles, keep only those
+       - with radius in a plausible range, and
+       - whose center is close to the mask center.
+    6) Choose the candidate closest to the mask center, enlarge radius slightly.
+    """
+    if img_path is None:
+        return None
+
+    img = cv2.imread(str(img_path))
+    if img is None:
+        return None
+
+    h, w = img.shape[:2]
+    if h == 0 or w == 0:
+        return None
+
+    mindim = min(h, w)
+
+    # --- 1) Color-based segmentation of the muddy liquid ----------------------
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    h_ch, s_ch, v_ch = cv2.split(hsv)
+
+    # mask: reasonably saturated and not too bright or too dark
+    mask = (s_ch > ROI_S_MIN) & (v_ch > ROI_V_MIN) & (v_ch < ROI_V_MAX)
+    mask_u8 = mask.astype("uint8") * 255
+
+    # morphological closing/opening to fill small gaps and remove noise
+    kernel = cv2.getStructuringElement(
+        cv2.MORPH_ELLIPSE, (ROI_KERNEL_SIZE, ROI_KERNEL_SIZE)
+    )
+    mask_u8 = cv2.morphologyEx(mask_u8, cv2.MORPH_CLOSE, kernel, iterations=2)
+    mask_u8 = cv2.morphologyEx(mask_u8, cv2.MORPH_OPEN, kernel, iterations=1)
+
+    ys, xs = np.nonzero(mask_u8)
+    if xs.size == 0:
+        # segmentation failed => no ROI for this slide
+        return None
+
+    cx_mask = float(xs.mean())
+    cy_mask = float(ys.mean())
+
+    # --- 2) Hough on masked edges --------------------------------------------
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    gray_blur = cv2.GaussianBlur(gray, (9, 9), 2)
+    gray_masked = cv2.bitwise_and(gray_blur, gray_blur, mask=mask_u8)
+
+    min_radius = int(mindim * 0.30)
+    max_radius = int(mindim * 0.60)
+
+    circles = cv2.HoughCircles(
+        gray_masked,
+        cv2.HOUGH_GRADIENT,
+        dp=1.2,
+        minDist=h / 2,
+        param1=120,
+        param2=20,
+        minRadius=min_radius,
+        maxRadius=max_radius,
+    )
+
+    if circles is None:
+        return None
+
+    candidates = []
+    for x_f, y_f, r_f in circles[0]:
+        x = int(round(x_f))
+        y = int(round(y_f))
+        r = int(round(r_f))
+
+        # keep only reasonably central centers
+        if not (w * CIRCLE_CENTER_MARGIN <= x <= w * (1.0 - CIRCLE_CENTER_MARGIN)):
+            continue
+        if not (h * CIRCLE_CENTER_MARGIN <= y <= h * (1.0 - CIRCLE_CENTER_MARGIN)):
+            continue
+
+        rel_r = r / float(mindim)
+        if not (CIRCLE_RADIUS_MIN_REL <= rel_r <= CIRCLE_RADIUS_MAX_REL):
+            continue
+
+        # distance of this center to the mask center (normalized by image size)
+        dist_norm = math.hypot(x - cx_mask, y - cy_mask) / float(mindim)
+        if dist_norm > 0.25:
+            # too far away from mask center => likely spurious arc
+            continue
+
+        candidates.append((x, y, r, dist_norm))
+
+    if not candidates:
+        # nothing reliable => no ROI masking
+        return None
+
+    # choose the candidate closest to the mask center, prefer larger radius if tie
+    x, y, r, _ = min(candidates, key=lambda c: (c[3], -c[2]))
+
+    r = int(r * CIRCLE_RADIUS_SCALE)
+    return int(x), int(y), int(r)
+
+
+def point_inside_circle(px, py, circle):
+    if circle is None:
+        return True
+    cx, cy, r = circle
+    return (px - cx)**2 + (py - cy)**2 <= r*r
+
+
+def filter_polygons_by_circle(polys, circle):
+    if circle is None:
+        return polys
+    filtered = []
+    for p in polys:
+        geom = p.get("polygon")
+        if geom is None or geom.is_empty:
+            continue
+        c = geom.centroid
+        if point_inside_circle(c.x, c.y, circle):
+            filtered.append(p)
+    return filtered
+
+
 
 ################################################################################
 #                     STEP 6: MAIN PIPELINE
