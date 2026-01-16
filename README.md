@@ -2,6 +2,12 @@
 
 COLLEMBOT is a reproducible pipeline for counting *Collembola* organisms in ecotoxicity soil slide images. It includes YOLOv11-seg inference, training utilities for curated datasets, and comparative benchmarking for segmentation backbones. Release: **v0.1.0**.
 
+<p align="center">
+  <img src="./collembot.jpg" alt="COLLEMBOT detections"><br>
+  <em>Example detections of COLLEMBOT v0.1.0</em>
+</p>
+
+
 ## Repository layout
 - `configs/`
   - `inference.yaml` — inference configuration.
