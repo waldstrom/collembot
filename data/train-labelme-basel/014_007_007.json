@@ -1,0 +1,43 @@
+{
+  "version": "5.8.1",
+  "flags": {},
+  "shapes": [
+    {
+      "label": "collembola",
+      "points": [
+        [
+          372.0,
+          0.0
+        ],
+        [
+          372.0,
+          18.0
+        ],
+        [
+          378.0,
+          18.0
+        ],
+        [
+          379.0,
+          17.0
+        ],
+        [
+          383.0,
+          17.0
+        ],
+        [
+          383.0,
+          0.0
+        ]
+      ],
+      "group_id": null,
+      "description": null,
+      "shape_type": "polygon",
+      "flags": {}
+    }
+  ],
+  "imagePath": "014_007_007.jpg",
+  "imageData": null,
+  "imageHeight": 572,
+  "imageWidth": 572
+}

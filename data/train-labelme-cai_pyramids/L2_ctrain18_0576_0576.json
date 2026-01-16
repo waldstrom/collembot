@@ -1,0 +1,46 @@
+{
+  "version": "5.2.1",
+  "flags": {},
+  "shapes": [
+    {
+      "label": "insect",
+      "points": [
+        [
+          568.0,
+          573.5
+        ],
+        [
+          571.5,
+          576.0
+        ],
+        [
+          576.0,
+          576.0
+        ],
+        [
+          576.0,
+          564.0
+        ],
+        [
+          573.0,
+          568.5
+        ],
+        [
+          568.0,
+          570.0
+        ],
+        [
+          568.0,
+          573.5
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "polygon",
+      "flags": {}
+    }
+  ],
+  "imagePath": "L2_ctrain18_0576_0576.jpg",
+  "imageData": null,
+  "imageHeight": 576,
+  "imageWidth": 576
+}

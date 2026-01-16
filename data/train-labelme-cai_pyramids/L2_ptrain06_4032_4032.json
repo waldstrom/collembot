@@ -1,0 +1,34 @@
+{
+  "version": "5.2.1",
+  "flags": {},
+  "shapes": [
+    {
+      "label": "insect",
+      "points": [
+        [
+          1.0,
+          68.5
+        ],
+        [
+          0.0,
+          67.0
+        ],
+        [
+          0.0,
+          71.5
+        ],
+        [
+          1.0,
+          68.5
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "polygon",
+      "flags": {}
+    }
+  ],
+  "imagePath": "L2_ptrain06_4032_4032.jpg",
+  "imageData": null,
+  "imageHeight": 385,
+  "imageWidth": 456
+}

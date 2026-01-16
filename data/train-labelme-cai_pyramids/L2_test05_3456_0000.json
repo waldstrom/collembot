@@ -1,0 +1,42 @@
+{
+  "version": "5.2.1",
+  "flags": {},
+  "shapes": [
+    {
+      "label": "insect",
+      "points": [
+        [
+          3.0,
+          246.0
+        ],
+        [
+          10.0,
+          244.5
+        ],
+        [
+          10.5,
+          242.5
+        ],
+        [
+          0.0,
+          242.828125
+        ],
+        [
+          0.0,
+          247.5
+        ],
+        [
+          3.0,
+          246.0
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "polygon",
+      "flags": {}
+    }
+  ],
+  "imagePath": "L2_test05_3456_0000.jpg",
+  "imageData": null,
+  "imageHeight": 576,
+  "imageWidth": 576
+}
