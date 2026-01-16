@@ -1,6 +1,6 @@
 import unittest
 
-from detectron_batching import compute_vram_aware_batch_size, estimate_images_per_gpu
+from scripts.detectron_batching import compute_vram_aware_batch_size, estimate_images_per_gpu
 
 
 class DetectronBatchingTests(unittest.TestCase):

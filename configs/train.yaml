@@ -5,12 +5,12 @@ classes:
   - collembola
 
 datasets:
-  - name: bart
-    images: data/jpgs_bart
-    labels: data/jpgs_bart
-  - name: micha
-    images: data/jpgs_micha
-    labels: data/jpgs_micha
+  - name: amsterdam
+    images: data/train-labelme-amsterdam
+    labels: data/train-labelme-amsterdam
+  - name: basel
+    images: data/train-labelme-basel
+    labels: data/train-labelme-basel
 
 splits:
   train: 0.7
