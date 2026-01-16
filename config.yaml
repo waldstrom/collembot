@@ -1,0 +1,20 @@
+images_folder: data/jpgs_bart
+experiments_dir: exps
+model:
+  folder: model
+  archive: best.pt.7z
+  weights: best.pt
+  fuse: false
+tile:
+  size: 576
+  shift: 288
+parallel:
+  n_gpus: 4
+  n_jobs: 16
+  batch_size: 32
+fusion:
+  best_conf: 0.732
+  best_iou: 0.101
+  alpha: 45.0
+skip_bright: true
+skip_blue: true

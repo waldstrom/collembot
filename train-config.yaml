@@ -1,0 +1,55 @@
+experiment_root: "train_experiments"
+random_seed: 42
+
+classes:
+  - collembola
+
+datasets:
+  - name: bart
+    images: data/jpgs_bart
+    labels: data/jpgs_bart
+  - name: micha
+    images: data/jpgs_micha
+    labels: data/jpgs_micha
+
+splits:
+  train: 0.7
+  val: 0.2
+  test: 0.1
+
+image:
+  target_size: 576
+
+model:
+  checkpoint: yolo11x-seg.pt
+  device: "0,1,2,3"
+
+training:
+  epochs: 100
+  batch: 8
+  device: [0, 1, 2, 3]
+  lr0: 0.0005
+  patience: 50
+  optimizer: AdamW
+  weight_decay: 0.0005
+  momentum: 0.937
+  cos_lr: true
+  amp: true
+  save_period: 0
+  max_det: 1000
+  single_cls: true
+  warmup_epochs: 3
+  workers: 8
+  hsv_h: 0.015
+  hsv_s: 0.5
+  hsv_v: 0.3
+  degrees: 10.0
+  translate: 0.05
+  scale: 0.5
+  fliplr: 0.5
+  mosaic: 1.0
+  mixup: 0.0
+  copy_paste: 0.1
+
+output:
+  project_name: yolo
