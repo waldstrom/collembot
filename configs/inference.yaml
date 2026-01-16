@@ -1,4 +1,4 @@
-images_folder: data/jpgs_bart
+images_folder: data/inference-examples
 experiments_dir: exps
 model:
   folder: model

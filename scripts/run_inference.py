@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# Usage: python scripts/run_inference.py --config configs/inference.yaml
+# Ownership: Copyright (c) 2026 Adrian Meyer
+# License: MIT (code); model weights and dependencies may be under AGPL-3.0.
 
 import os
 import math
@@ -170,7 +173,7 @@ def filter_polygons_by_circle(polys, circle):
 #                         CONFIGURATION & PATH SETUP
 # ------------------------------------------------------------------------------
 
-CONFIG_PATH = Path("config.yaml")
+CONFIG_PATH = Path("configs/inference.yaml")
 with open(CONFIG_PATH, "r") as f:
     CFG = yaml.safe_load(f)
 

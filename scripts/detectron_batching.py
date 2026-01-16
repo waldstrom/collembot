@@ -1,3 +1,6 @@
+# Usage: imported by scripts/compare_models.py to size Detectron2 batches.
+# Ownership: Copyright (c) 2026 Adrian Meyer
+# License: MIT (code); model weights and dependencies may be under AGPL-3.0.
 """Utilities for sizing Detectron2 batches based on available VRAM."""
 
 from __future__ import annotations

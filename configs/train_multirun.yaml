@@ -8,19 +8,19 @@ classes:
   - collembola
 
 datasets:
-  - name: train-labelme-michamorechecked
-    images: data/train-labelme-michamorechecked
-    labels: data/train-labelme-michamorechecked
-  - name: train-labelme-everton
-    images: data/train-labelme-everton
-    labels: data/train-labelme-everton
-  - name: train-labelme-coimbrachecked
-    images: data/train-labelme-coimbrachecked
-    labels: data/train-labelme-coimbrachecked
-  - name: train-labelme-bart
-    images: data/train-labelme-bart
-    labels: data/train-labelme-bart
-  - name: train-labelme-cai_pyramids
+  - name: basel
+    images: data/train-labelme-basel
+    labels: data/train-labelme-basel
+  - name: bayreuth
+    images: data/train-labelme-bayreuth
+    labels: data/train-labelme-bayreuth
+  - name: coimbra
+    images: data/train-labelme-coimbra
+    labels: data/train-labelme-coimbra
+  - name: amsterdam
+    images: data/train-labelme-amsterdam
+    labels: data/train-labelme-amsterdam
+  - name: cai_pyramids
     images: data/train-labelme-cai_pyramids
     labels: data/train-labelme-cai_pyramids
 

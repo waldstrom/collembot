@@ -1,6 +1,10 @@
+#!/usr/bin/env python3
+# Usage: python scripts/gradio_app.py (for Colab helper modules).
+# Ownership: Copyright (c) 2026 Adrian Meyer
+# License: MIT (code); model weights and dependencies may be under AGPL-3.0.
 """Gradio-ready inference helper for Google Colab.
 
-This module mirrors the essential inference utilities from ``inference.py``
+This module mirrors the essential inference utilities from ``scripts/run_inference.py``
 while keeping the surface area small enough for quick interactive use. The
 primary entry point is :func:`launch_app`, which spins up a Gradio interface
 that lets users upload a slide image, run tiled inference (with both original
@@ -52,10 +56,10 @@ ROI_KERNEL_SIZE = 21
 CPU_WORKERS = max(1, os.cpu_count() or 1)
 
 
-def _load_config_overrides(config_path: Path = Path("config.yaml")) -> None:
-    """Override core thresholds from ``config.yaml`` when available.
+def _load_config_overrides(config_path: Path = Path("configs/inference.yaml")) -> None:
+    """Override core thresholds from ``configs/inference.yaml`` when available.
 
-    The Colab helper should mirror the main ``inference.py`` behaviour. Reading
+    The Colab helper should mirror the main ``scripts/run_inference.py`` behaviour. Reading
     the shared config keeps fusion thresholds, tiling sizes, and optional shifts
     aligned without hard-coding values in two places. Failures are silent to
     avoid breaking notebook imports when the config is absent.
@@ -87,7 +91,7 @@ def _load_config_overrides(config_path: Path = Path("config.yaml")) -> None:
 _load_config_overrides()
 
 # ----------------------------------------------------------------------------
-# Circle detection helpers (ported from inference.py)
+# Circle detection helpers (ported from scripts/run_inference.py)
 # ----------------------------------------------------------------------------
 
 def _to_bgr_image(img_source):
@@ -110,7 +114,7 @@ def _to_bgr_image(img_source):
 def find_main_circle(img_source):
     """Detect the main dish/glass circle in an image.
 
-    The logic mirrors ``inference.py`` to keep behaviour consistent between the
+    The logic mirrors ``scripts/run_inference.py`` to keep behaviour consistent between the
     HPC and Colab variants, but downsamples large inputs to avoid excessive
     latency in Colab notebooks (e.g., 6000x4000 images).
     """

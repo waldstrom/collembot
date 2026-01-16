@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
+# Usage: python scripts/compare_models.py --config configs/train_multirun.yaml
+# Ownership: Copyright (c) 2026 Adrian Meyer
+# License: MIT (code); model weights and dependencies may be under AGPL-3.0.
 """Train and compare YOLOv11, Mask R-CNN, Mask2Former, and MaskDINO models.
 
-This script reuses datasets prepared by ``train.py`` (YOLO format with ``data.yaml``)
+This script reuses datasets prepared by ``scripts/train_model.py`` (YOLO format with ``data.yaml``)
 so it fits into the existing pipeline. It trains three models, evaluates them on the
 same test split, and writes per-model results plus comparison summaries under a new
 experiment directory.
@@ -36,7 +39,7 @@ from detectron2.engine.hooks import HookBase
 from detectron2.evaluation import COCOEvaluator
 from detectron2.solver.build import get_default_optimizer_params, maybe_add_gradient_clipping
 
-from detectron_batching import collect_gpu_vram, compute_vram_aware_batch_size
+from scripts.detectron_batching import collect_gpu_vram, compute_vram_aware_batch_size
 import yaml
 from PIL import Image
 from torch.hub import download_url_to_file
@@ -50,7 +53,7 @@ warnings.filterwarnings(
     module="shapely",
 )
 
-from train import (  # noqa: E402  - reuse existing pipeline utilities
+from scripts.train_model import (  # noqa: E402  - reuse existing pipeline utilities
     create_experiment_dir,
     collect_entries,
     extract_eval_metrics,
@@ -73,10 +76,10 @@ MODEL_FOLDERS = {
 REGISTERED_COCO: set = set()
 
 EVAL_NAME_MAP = {
-    "coimbrachecked": "COIMBRA",
-    "bart": "AMSTERDAM",
-    "everton": "BAYREUTH",
-    "michamorechecked": "BASEL",
+    "coimbra": "COIMBRA",
+    "amsterdam": "AMSTERDAM",
+    "bayreuth": "BAYREUTH",
+    "basel": "BASEL",
     "cai_pyramids": "FLATCAI",
 }
 
@@ -2191,7 +2194,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--config",
         type=Path,
-        default=Path("config_multitrain.yaml"),
+        default=Path("configs/train_multirun.yaml"),
         help="Config file used by the comparison pipeline.",
     )
     parser.add_argument(

@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# Usage: python scripts/train_model.py --config configs/train.yaml
+# Ownership: Copyright (c) 2026 Adrian Meyer
+# License: MIT (code); model weights and dependencies may be under AGPL-3.0.
 """Structured training pipeline for Collembola instance segmentation."""
 
 from __future__ import annotations
@@ -125,9 +128,11 @@ def derive_dataset_name(raw_name: str) -> str:
         return sanitize_name("dataset")
 
     cleaned = raw_name.strip()
-    prefix = "train-labelme-"
-    if cleaned.lower().startswith(prefix):
-        cleaned = cleaned[len(prefix) :]
+    prefixes = ("train-labelme-", "labelme-")
+    for prefix in prefixes:
+        if cleaned.lower().startswith(prefix):
+            cleaned = cleaned[len(prefix) :]
+            break
     elif "-" in cleaned:
         cleaned = cleaned.split("-")[-1]
 
@@ -836,7 +841,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--config",
         type=Path,
-        default=Path("train-config.yaml"),
+        default=Path("configs/train.yaml"),
         help="Path to the training configuration file.",
     )
     parser.add_argument(
