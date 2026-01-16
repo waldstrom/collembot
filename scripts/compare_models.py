@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Usage: python scripts/compare_models.py --config configs/train_multirun.yaml
 # Ownership: Copyright (c) 2026 Adrian Meyer
-# License: MIT (code); model weights and dependencies may be under AGPL-3.0.
+# License: AGPL-3.0 only (code); model weights and dependencies may be under AGPL-3.0.
 """Train and compare YOLOv11, Mask R-CNN, Mask2Former, and MaskDINO models.
 
 This script reuses datasets prepared by ``scripts/train_model.py`` (YOLO format with ``data.yaml``)
