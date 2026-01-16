@@ -70,6 +70,7 @@ model:
   fuse: false
 ```
 Adjust paths and parallelism to match local resources. The script extracts missing `.pt` weights from the archive automatically and records the originating image directory for reproducibility.
+Model weights permalink: https://zenodo.org/records/17987887/files/collembot_yolo11xseg_v_0_1_0.pt?download=1
 
 ## Running inference
 ```bash
