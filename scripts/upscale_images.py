@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Usage: python scripts/upscale_images.py --input data/inference_examples --output data/inference_examples_upscaled
 # Ownership: Copyright (c) 2026 Adrian Meyer
-# License: MIT (code); model weights and dependencies may be under AGPL-3.0.
+# License: AGPL-3.0 only (code); model weights and dependencies may be under AGPL-3.0.
 import os
 import sys
 import argparse

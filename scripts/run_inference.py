@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # Usage: python scripts/run_inference.py --config configs/inference.yaml
 # Ownership: Copyright (c) 2026 Adrian Meyer
-# License: MIT (code); model weights and dependencies may be under AGPL-3.0.
+# License: AGPL-3.0 only (code); model weights and dependencies may be under AGPL-3.0.
 
 import os
 import math

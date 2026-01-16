@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Usage: python scripts/gradio_app.py (for Colab helper modules).
 # Ownership: Copyright (c) 2026 Adrian Meyer
-# License: MIT (code); model weights and dependencies may be under AGPL-3.0.
+# License: AGPL-3.0 only (code); model weights and dependencies may be under AGPL-3.0.
 """Gradio-ready inference helper for Google Colab.
 
 This module mirrors the essential inference utilities from ``scripts/run_inference.py``

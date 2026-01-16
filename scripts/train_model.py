@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Usage: python scripts/train_model.py --config configs/train.yaml
 # Ownership: Copyright (c) 2026 Adrian Meyer
-# License: MIT (code); model weights and dependencies may be under AGPL-3.0.
+# License: AGPL-3.0 only (code); model weights and dependencies may be under AGPL-3.0.
 """Structured training pipeline for Collembola instance segmentation."""
 
 from __future__ import annotations

@@ -285,7 +285,7 @@ https://zenodo.org/records/17987887/files/collembot_yolo11xseg_v_0_1_0.pt?downlo
 This project depends on **YOLOv11 by Ultralytics**, which is licensed under **AGPL-3.0**. The dependency is not bundled with this repository.
 
 ## Licensing
-- **Code**: MIT License (see `LICENSE`).
+- **Code**: AGPL-3.0 only (see `LICENSE`).
 - **Data**: CC-BY-4.0 (see `data/README.md`).
 - **Model weights**: AGPL-3.0 only (see Zenodo DOI above).
 - **Real-ESRGAN elements** (used by `scripts/upscale_images.py`): BSD-3-Clause (see https://github.com/xinntao/Real-ESRGAN/).
