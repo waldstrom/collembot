@@ -2,6 +2,10 @@
 
 COLLEMBOT is a reproducible pipeline for counting *Collembola* organisms in ecotoxicity soil slide images. It includes YOLOv11-seg inference, training utilities for curated datasets, and comparative benchmarking for segmentation backbones. Release: **v0.1.0**.
 
+This research project develops and validates an automated counting workflow for *Folsomia candida* in OECD 232 soil ecotoxicology tests, replacing manual counting with a reproducible deep-learning pipeline that improves throughput and reduces operator bias.
+
+Preprint DOI: [10.64898/2026.01.16.697653](https://doi.org/10.64898/2026.01.16.697653) ([bioRxiv version](https://www.biorxiv.org/content/10.64898/2026.01.16.697653v1))
+
 <p align="center">
   <img src="./collembot.jpg" alt="COLLEMBOT detections"><br>
   <em>Example detections of COLLEMBOT v0.1.0</em>
