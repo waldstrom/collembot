@@ -4,7 +4,11 @@ COLLEMBOT is a reproducible pipeline for counting *Collembola* organisms in ecot
 
 This research project develops and validates an automated counting workflow for *Folsomia candida* in OECD 232 soil ecotoxicology tests, replacing manual counting with a reproducible deep-learning pipeline that improves throughput and reduces operator bias.
 
-Preprint DOI: [10.64898/2026.01.16.697653](https://doi.org/10.64898/2026.01.16.697653) ([bioRxiv version](https://www.biorxiv.org/content/10.64898/2026.01.16.697653v1))
+Wehrli, M., Meyer, A., da Silva, É. S., et al. (2026).
+COLLEMBOT: AI-based counting of Collembola for OECD 232 Tests.
+Environmental Toxicology and Chemistry.
+Publication DOI: [10.1093/etojnl/vgag068](https://doi.org/10.1093/etojnl/vgag068) 
+([bioRxiv version](https://www.biorxiv.org/content/10.64898/2026.01.16.697653v1))
 
 <p align="center">
   <img src="./collembot.jpg" alt="COLLEMBOT detections"><br>
